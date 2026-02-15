@@ -1,0 +1,88 @@
+* {
+    box-sizing: border-box;
+}
+
+.mainContainer {
+    font-family: 'Roboto', serif;
+    color: white;
+}
+
+.container {
+    padding-top: 100px;
+    padding-bottom: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+img {
+    width: 100%;
+    min-width: 160px;
+}
+
+.logo {
+    width: 160px;
+    height: 160px;
+}
+
+.textContainer {
+    padding: 30px;
+    text-align: center;
+}
+
+h2, p {
+    padding: 16px;
+    margin: 0;
+}
+
+p {
+    color: #979DB1;
+}
+
+button {
+    width: 360px;
+    padding: 13px;
+    background-color: #707BDF;
+    border: none;
+    border-radius: 9px;
+    color: #FDFDFD;
+    font-size: 17px;
+    text-transform: uppercase;
+}
+
+button:hover {
+    opacity: 0.7;
+}
+
+button:active {
+    opacity: 0.5;
+}
+
+.customTextField {
+    width: 360px
+}
+
+.glassInput {
+    width: 100%;
+    padding-top: 13px;
+    padding-bottom: 13px;
+    padding-left: 16px;
+    margin-bottom: 20px;
+    color: white;
+    font-size: 14px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 9px;
+}
+
+.glassInput:hover {
+    border: 1px solid #707BDF;
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+}
+
+.linkStyle {
+    color: #707BDF;
+    text-decoration: none;
+}
