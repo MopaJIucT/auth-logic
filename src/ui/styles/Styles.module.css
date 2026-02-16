@@ -40,6 +40,10 @@ p {
     color: #979DB1;
 }
 
+.buttonContainer {
+    margin: 0 20px;
+}
+
 button {
     width: 360px;
     padding: 13px;

@@ -30,10 +30,10 @@ function GenerateForm() {
                 <h2>Memorise</h2>
                 <p>Для регистрации укажи свою электронную почту,</p>
                 <p>нужно будет потвердить.</p>
-                <p>Можем <Link to={"/"} className={s.linkStyle}>вернуться</Link>, если вспомнил.</p>
+                <p>Можем <Link to={"/login"} className={s.linkStyle}>вернуться</Link>.</p>
             </div>
             <CustomTextField placeholder={"Введите свой email"} nameId={"email"} onChange={handleEmailChange} value={email} />
-            <CustomButton onClick={sendFormEmail}/>
+            <CustomButton onClick={sendFormEmail} value={"присоединиться"}/>
         </div>
     )
 }

@@ -23,8 +23,7 @@ function Login({setToken}: LoginProps) {
     async function handleSubmit() {
         const token = await sendFormLogin(formLogin);
         if (token) {
-            setToken(token);
-            console.log(formLogin);
+            setToken(token)
         }
     }
 
@@ -48,7 +47,7 @@ function Login({setToken}: LoginProps) {
                              type={'password'}
                              onChange={(value) => handleChange("password", value)}
             />
-            <CustomButton onClick={handleSubmit}/>
+            <CustomButton onClick={handleSubmit} value={"войти"}/>
         </div>
     )
 }

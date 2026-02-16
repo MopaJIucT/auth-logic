@@ -6,6 +6,11 @@ export type TextFieldLoginProps = {
     value?: string
 }
 
+export type CustomButtonProps = {
+    onClick: () => void
+    value: string
+}
+
 export type LoginProps = {
     setToken: (token: string) => void
 }
@@ -15,7 +20,11 @@ export type LoginForm = {
     password: string
 }
 
-export type emailForm = {
+export type EmailForm = {
     email: string
     action: string
+}
+
+export type ProfileProps = {
+    setToken: (token: string | null) => void
 }
