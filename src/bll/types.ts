@@ -12,7 +12,7 @@ export type CustomButtonProps = {
 }
 
 export type LoginProps = {
-    setToken: (token: string) => void
+    setSubmit: (value: boolean) => void
 }
 
 export type LoginForm = {
@@ -26,5 +26,20 @@ export type EmailForm = {
 }
 
 export type ProfileProps = {
-    setToken: (token: string | null) => void
+    setUser: (user: ProfileResponse | null) => void
+    setSubmit: (value: boolean) => void
+    user: ProfileResponse | null
+}
+
+export type ProfileResponse = {
+    id: string
+    username: string | null
+    login: string | null
+    avatarSrc: string | null
+    createdAt: string
+    lastModifiedAt: string | null
+    email: string | null
+    role: "User" | "Admin" | "Moderator" | "Support"
+    tokens: number
+    lastTokensResetAt: string | null
 }

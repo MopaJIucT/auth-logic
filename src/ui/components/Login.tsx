@@ -1,13 +1,13 @@
-import s from "../styles/Styles.module.css";
-import {Link} from "react-router-dom";
-import Logo from "./Logo.tsx";
-import CustomTextField from "./CustomTextField.tsx";
-import CustomButton from "./CustomButton.tsx";
-import {useState} from "react";
-import type {LoginForm, LoginProps} from "../../bll/types.ts";
-import {sendFormLogin} from "../../dal/api.ts";
+import s from "../styles/Styles.module.css"
+import {Link} from "react-router-dom"
+import Logo from "./Logo.tsx"
+import CustomTextField from "./CustomTextField.tsx"
+import CustomButton from "./CustomButton.tsx"
+import {useState} from "react"
+import {sendFormLogin} from "../../dal/api.ts"
+import type {LoginForm, LoginProps} from "../../bll/types.ts"
 
-function Login({setToken}: LoginProps) {
+function Login({setSubmit}: LoginProps)  {
     const [formLogin, setFormLogin] = useState<LoginForm>({
         login: "",
         password: "",
@@ -21,10 +21,14 @@ function Login({setToken}: LoginProps) {
     }
 
     async function handleSubmit() {
-        const token = await sendFormLogin(formLogin);
-        if (token) {
-            setToken(token)
+        const res: string| null = await sendFormLogin(formLogin)
+        if(res != null){
+            localStorage.setItem("token", res as string)
+            setSubmit(true)
+        } else {
+            setSubmit(false)
         }
+        // установка токена в лс, вызов запроса '/profile', state для профиля
     }
 
     return (

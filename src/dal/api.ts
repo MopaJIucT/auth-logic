@@ -1,4 +1,4 @@
-import type {EmailForm, LoginForm} from "../bll/types.ts";
+import type {EmailForm, LoginForm, ProfileResponse} from "../bll/types.ts";
 
 const initalUrl = 'https://dev-api.memorise.cards'
 
@@ -37,7 +37,7 @@ export function getLogout() {
     })
 }
 
-export async function checkToken(loaderOff: (value: boolean) => void) {
+export async function getProfile(loaderOff: () => void) {
     const res = await fetch(initalUrl + '/api/auth/profile', {
         method: 'GET',
         headers: {
@@ -46,11 +46,11 @@ export async function checkToken(loaderOff: (value: boolean) => void) {
         }
     })
     if(res.ok) {
-        const data = await res.json()
-        loaderOff(false)
-        return data.accessToken
+        const data:ProfileResponse = await res.json()
+        loaderOff()
+        return data
     } else {
-        loaderOff(false)
+        loaderOff()
         return null
     }
 }

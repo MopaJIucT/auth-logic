@@ -1,64 +1,61 @@
-import {Navigate, Route, Routes} from "react-router-dom";
+import {Navigate, Route, Routes} from "react-router-dom"
 import s from './ui/styles/Styles.module.css'
-import Login from "./ui/components/Login.tsx";
-import GenerateForm from "./ui/components/GenerateForm.tsx";
-import {useEffect, useState} from "react";
-import Profile from "./ui/components/Profile.tsx";
-import {checkToken} from "./dal/api.ts";
-import Logo from "./ui/components/Logo.tsx";
+import Login from "./ui/components/Login.tsx"
+import GenerateForm from "./ui/components/GenerateForm.tsx"
+import {useEffect, useState} from "react"
+import Profile from "./ui/components/Profile.tsx"
+import {getProfile} from "./dal/api.ts"
+import type {ProfileResponse} from "./bll/types.ts"
+import Loader from "./ui/components/Loader.tsx"
 
 function App() {
 
-    const [user, setUser] = useState<string | null>(null)
-    const [loader, setLoader] = useState<boolean>()
+    const [user, setUser] = useState<ProfileResponse | null>(null)
+    const [loader, setLoader] = useState<boolean>(true)
+    const [onSubmit, setSubmit] = useState<boolean>(false)
 
-    function setToken(token: string | null) {
-        setUser(token)
-    }
-    function handleSetLoader(value: boolean) {
-        setLoader(value)
+    function handleSetLoader() {
+        setLoader(false)
     }
 
     useEffect(() => {
-        handleSetLoader(true)
-        if((localStorage.getItem('token') ?? '').length > 0) {
-            <Navigate to='/profile' />
-            return
+        console.log(onSubmit)
+        if ((localStorage.getItem('token') ?? '').length > 0) {
+            const res = getProfile(handleSetLoader)
+            res.then((user) => {
+                setUser(user)
+                setSubmit(true)
+            })
+        } else {
+            handleSetLoader()
         }
-        const res = checkToken(handleSetLoader)
-        console.log(res)
-    },[])
-
-    if (loader) {
-        return (
-            <div className={s.mainContainer}>
-                <div className={s.container}>
-                    <Logo />
-                    <div className={s.textContainer}>
-                        <h2>Memorise</h2>
-                        <p>Одну секунду, призываем высшие силы.</p>
-                    </div>
-                </div>
-            </div>
-        )
-    }
+    }, [])
 
     return (
         <div className={s.mainContainer}>
-            <Routes>
-                <Route
-                    path="/login"
-                    element={user ? <Navigate to="/profile" /> : <Login setToken={setToken} />}
-                />
-                <Route
-                    path="/generate"
-                    element={<GenerateForm />}
-                />
-                <Route
-                    path="/profile"
-                    element={user ? <Profile setToken={setToken} /> : <Navigate to="/login" />}
-                />
-            </Routes>
+            {loader ? <Loader/> : (
+                <Routes>
+                    <Route
+                        path="/login"
+                        element={onSubmit ? <Navigate to="/profile"/> : <Login setSubmit={setSubmit}/>}
+                    />
+                    <Route
+                        path="/generate"
+                        element={<GenerateForm/>}
+                    />
+                    <Route
+                        path="/profile"
+                        element={onSubmit ? <Profile setUser={setUser}
+                                                     user={user}
+                                                     setSubmit={setSubmit}
+                        /> : <Navigate to="/login"/>}
+                    />
+                    <Route
+                        path="/*"
+                        element={<Navigate to="/login"/>}
+                    />
+                </Routes>
+            )}
         </div>
     )
 }
