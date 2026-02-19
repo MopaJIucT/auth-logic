@@ -3,12 +3,11 @@ import Logo from "./Logo.tsx"
 import CustomButton from "./CustomButton.tsx"
 import type {ProfileProps} from "../../bll/types.ts"
 
-function Profile({setUser, setSubmit, user}: ProfileProps) {
+function Profile({setUser, user}: ProfileProps) {
 
     function handleLogout() {
         localStorage.clear()
         setUser(null)
-        setSubmit(false)
     }
 
     function handleDelete() {
