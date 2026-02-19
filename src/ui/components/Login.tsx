@@ -4,10 +4,10 @@ import Logo from "./Logo.tsx"
 import CustomTextField from "./CustomTextField.tsx"
 import CustomButton from "./CustomButton.tsx"
 import {useState} from "react"
-import {sendFormLogin} from "../../dal/api.ts"
+import {getProfile, sendFormLogin} from "../../dal/api.ts"
 import type {LoginForm, LoginProps} from "../../bll/types.ts"
 
-function Login({setSubmit}: LoginProps)  {
+function Login({setSubmit, setUser}: LoginProps) {
     const [formLogin, setFormLogin] = useState<LoginForm>({
         login: "",
         password: "",
@@ -21,19 +21,22 @@ function Login({setSubmit}: LoginProps)  {
     }
 
     async function handleSubmit() {
-        const res: string| null = await sendFormLogin(formLogin)
-        if(res != null){
-            localStorage.setItem("token", res as string)
-            setSubmit(true)
+        const token: string | null = await sendFormLogin(formLogin)
+        if (token != null) {
+            localStorage.setItem("token", token as string)
+            getProfile().then((profileResponse) => {
+                    setUser(profileResponse)
+                    setSubmit(true)
+                }
+            )
         } else {
             setSubmit(false)
         }
-        // установка токена в лс, вызов запроса '/profile', state для профиля
     }
 
     return (
         <div className={s.container}>
-            <Logo />
+            <Logo/>
             <div className={s.textContainer}>
                 <h2>Memorise</h2>
                 <p>Введите свои данные.</p>

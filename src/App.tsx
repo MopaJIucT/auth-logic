@@ -19,12 +19,13 @@ function App() {
     }
 
     useEffect(() => {
-        console.log(onSubmit)
         if ((localStorage.getItem('token') ?? '').length > 0) {
-            const res = getProfile(handleSetLoader)
+            const res = getProfile()
             res.then((user) => {
                 setUser(user)
                 setSubmit(true)
+            }).finally(() => {
+                handleSetLoader()
             })
         } else {
             handleSetLoader()
@@ -37,7 +38,9 @@ function App() {
                 <Routes>
                     <Route
                         path="/login"
-                        element={onSubmit ? <Navigate to="/profile"/> : <Login setSubmit={setSubmit}/>}
+                        element={onSubmit
+                            ? <Navigate to="/profile"/>
+                            : <Login setSubmit={setSubmit} setUser={setUser}/>}
                     />
                     <Route
                         path="/generate"
@@ -45,10 +48,11 @@ function App() {
                     />
                     <Route
                         path="/profile"
-                        element={onSubmit ? <Profile setUser={setUser}
-                                                     user={user}
-                                                     setSubmit={setSubmit}
-                        /> : <Navigate to="/login"/>}
+                        element={onSubmit ?
+                            <Profile setUser={setUser}
+                                     user={user}
+                                     setSubmit={setSubmit}
+                            /> : <Navigate to="/login"/>}
                     />
                     <Route
                         path="/*"

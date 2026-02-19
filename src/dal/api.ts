@@ -37,7 +37,7 @@ export function getLogout() {
     })
 }
 
-export async function getProfile(loaderOff: () => void) {
+export async function getProfile() {
     const res = await fetch(initalUrl + '/api/auth/profile', {
         method: 'GET',
         headers: {
@@ -47,10 +47,8 @@ export async function getProfile(loaderOff: () => void) {
     })
     if(res.ok) {
         const data:ProfileResponse = await res.json()
-        loaderOff()
         return data
     } else {
-        loaderOff()
         return null
     }
 }
