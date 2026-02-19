@@ -12,7 +12,6 @@ export type CustomButtonProps = {
 }
 
 export type LoginProps = {
-    setSubmit: (value: boolean) => void
     setUser: (value: ProfileResponse | null) => void
 }
 
@@ -28,7 +27,6 @@ export type EmailForm = {
 
 export type ProfileProps = {
     setUser: (user: ProfileResponse | null) => void
-    setSubmit: (value: boolean) => void
     user: ProfileResponse | null
 }
 

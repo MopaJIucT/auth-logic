@@ -12,7 +12,6 @@ function App() {
 
     const [user, setUser] = useState<ProfileResponse | null>(null)
     const [loader, setLoader] = useState<boolean>(true)
-    const [onSubmit, setSubmit] = useState<boolean>(false)
 
     function handleSetLoader() {
         setLoader(false)
@@ -23,7 +22,8 @@ function App() {
             const res = getProfile()
             res.then((user) => {
                 setUser(user)
-                setSubmit(true)
+            }).catch(() => {
+                setUser(null)
             }).finally(() => {
                 handleSetLoader()
             })
@@ -38,9 +38,9 @@ function App() {
                 <Routes>
                     <Route
                         path="/login"
-                        element={onSubmit
+                        element={user
                             ? <Navigate to="/profile"/>
-                            : <Login setSubmit={setSubmit} setUser={setUser}/>}
+                            : <Login setUser={setUser}/>}
                     />
                     <Route
                         path="/generate"
@@ -48,10 +48,9 @@ function App() {
                     />
                     <Route
                         path="/profile"
-                        element={onSubmit ?
+                        element={user ?
                             <Profile setUser={setUser}
                                      user={user}
-                                     setSubmit={setSubmit}
                             /> : <Navigate to="/login"/>}
                     />
                     <Route

@@ -7,7 +7,7 @@ import {useState} from "react"
 import {getProfile, sendFormLogin} from "../../dal/api.ts"
 import type {LoginForm, LoginProps} from "../../bll/types.ts"
 
-function Login({setSubmit, setUser}: LoginProps) {
+function Login({setUser}: LoginProps) {
     const [formLogin, setFormLogin] = useState<LoginForm>({
         login: "",
         password: "",
@@ -26,11 +26,12 @@ function Login({setSubmit, setUser}: LoginProps) {
             localStorage.setItem("token", token as string)
             getProfile().then((profileResponse) => {
                     setUser(profileResponse)
-                    setSubmit(true)
+                    // setSubmit(true)
                 }
             )
         } else {
-            setSubmit(false)
+            // setSubmit(false)
+            setUser(null)
         }
     }
 
