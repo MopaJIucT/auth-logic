@@ -42,3 +42,17 @@ export type ProfileResponse = {
     tokens: number
     lastTokensResetAt: string | null
 }
+
+export type SendEmailResponse = {
+    expiresAt: string
+}
+
+export type VerificationEmail = {
+    email: string
+}
+
+export type VerificationForm = {
+    otp: string
+    email: string
+    action: string
+}

@@ -1,4 +1,4 @@
-import type {EmailForm, LoginForm, ProfileResponse} from "../bll/types.ts";
+import type {EmailForm, LoginForm, ProfileResponse, SendEmailResponse} from "../bll/types.ts";
 
 const initalUrl = 'https://dev-api.memorise.cards'
 
@@ -18,14 +18,21 @@ export async function sendFormLogin(formLogin: LoginForm) {
     return null
 }
 
-export function sendEmail(emailForm: EmailForm) {
-    fetch(initalUrl + '/api/auth/otp/generate', {
+export async function sendEmail(emailForm: EmailForm) {
+    const res = await  fetch(initalUrl + '/api/auth/otp/generate', {
         method: 'POST',
         headers: {
-            'Content-Type': "application/json"
+            'Content-Type': "application/json",
         },
         body: JSON.stringify(emailForm)
     })
+    if(res.ok) {
+        const data: SendEmailResponse = await res.json()
+        console.log(data)
+    } else {
+        console.log('Error sending email')
+        return
+    }
 }
 
 export function getLogout() {
@@ -51,4 +58,13 @@ export async function getProfile() {
     } else {
         return null
     }
+}
+
+export async function getVerifyToken(email) {
+    const res = await fetch(initalUrl + '/api/auth/verify', {
+        method: 'POST',
+        headers: {
+            'Content-Type': "application/json"
+        }
+    })
 }
