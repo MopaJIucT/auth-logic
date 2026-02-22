@@ -1,4 +1,4 @@
-import type {EmailForm, LoginForm, ProfileResponse, SendEmailResponse} from "../bll/types.ts";
+import type {EmailForm, LoginForm, ProfileResponse, SendEmailResponse, VerificationForm} from "../bll/types.ts";
 
 const initalUrl = 'https://dev-api.memorise.cards'
 
@@ -60,11 +60,18 @@ export async function getProfile() {
     }
 }
 
-export async function getVerifyToken(email) {
-    const res = await fetch(initalUrl + '/api/auth/verify', {
+export async function getVerifyToken(verificationForm: VerificationForm) {
+    const res = await fetch(initalUrl + '/api/auth/otp/verify', {
         method: 'POST',
         headers: {
             'Content-Type': "application/json"
-        }
+        },
+        body: JSON.stringify(verificationForm)
     })
+    if(res.ok) {
+        const data = await res.json()
+        console.log(data)
+    } else {
+        return null
+    }
 }

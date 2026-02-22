@@ -47,7 +47,7 @@ export type SendEmailResponse = {
     expiresAt: string
 }
 
-export type VerificationEmail = {
+export type VerificationEmailProps = {
     email: string
 }
 
