@@ -5,11 +5,11 @@ import CustomButton from "./CustomButton.tsx";
 import {useState} from "react";
 import {sendEmail} from "../../dal/api.ts";
 import {Link} from "react-router-dom";
-import type {EmailForm} from "../../bll/types.ts";
+import type {EmailForm, GenerateFormProps} from "../../bll/types.ts";
 import VerificationEmail from "./VerificationEmail";
 
 
-function GenerateForm() {
+function GenerateForm({setNewUser}: GenerateFormProps) {
     const [emailForm, setEmailForm] = useState<EmailForm>({
         "email": "",
         "action": "Register"
@@ -32,24 +32,27 @@ function GenerateForm() {
 
     return (
         <div>
-            {inProgressEmail ? <VerificationEmail email={inProgressEmail}/> : <div className={s.container}>
+            {inProgressEmail ? <VerificationEmail email={inProgressEmail}
+                                                  setNewUser={setNewUser}
+
+            /> : <div className={s.container}>
                 <Logo/>
-                    <div className={s.textContainer}>
-                        <h2>Memorise</h2>
-                        <div>
-                            <p>Для регистрации укажи свою электронную почту,</p>
-                            <p>нужно будет потвердить.</p>
-                            <p>Можем <Link to={"/login"}
-                                           className={s.linkStyle}
-                            >вернуться</Link>.</p>
-                        </div>
+                <div className={s.textContainer}>
+                    <h2>Memorise</h2>
+                    <div>
+                        <p>Для регистрации укажи свою электронную почту,</p>
+                        <p>нужно будет потвердить.</p>
+                        <p>Можем <Link to={"/login"}
+                                       className={s.linkStyle}
+                        >вернуться</Link>.</p>
                     </div>
-                    <CustomTextField placeholder={"Введите свой email"}
-                                     nameId={"email"}
-                                     onChange={(value) => handleEmailChange("email", value)}
-                    />
-                    <CustomButton onClick={handleSendEmail} value={"присоединиться"}/>
                 </div>
+                <CustomTextField placeholder={"Введите свой email"}
+                                 nameId={"email"}
+                                 onChange={(value) => handleEmailChange("email", value)}
+                />
+                <CustomButton onClick={handleSendEmail} value={"присоединиться"}/>
+            </div>
             }
         </div>
     )

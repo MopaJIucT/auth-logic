@@ -15,7 +15,9 @@ function Profile({setUser, user}: ProfileProps) {
         getDelete()
     }
 
-    function getDelete() {}
+    function getDelete() {
+
+    }
 
     function handleUpdateUsername() {}
 

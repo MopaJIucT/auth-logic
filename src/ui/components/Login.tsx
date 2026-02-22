@@ -26,11 +26,9 @@ function Login({setUser}: LoginProps) {
             localStorage.setItem("token", token as string)
             getProfile().then((profileResponse) => {
                     setUser(profileResponse)
-                    // setSubmit(true)
                 }
             )
         } else {
-            // setSubmit(false)
             setUser(null)
         }
     }

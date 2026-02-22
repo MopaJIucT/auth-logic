@@ -43,16 +43,36 @@ export type ProfileResponse = {
     lastTokensResetAt: string | null
 }
 
+export type GenerateFormProps = {
+    setNewUser: (verifyToken: string) => void
+}
+
 export type SendEmailResponse = {
     expiresAt: string
 }
 
 export type VerificationEmailProps = {
     email: string
+    setNewUser: (verifyToken: string) => void
 }
 
 export type VerificationForm = {
     otp: string
     email: string
     action: string
+}
+
+export type VerifyTokenResponse = {
+    verificationToken: string
+}
+
+export type RegisterFormProps = {
+    verifyToken: string
+    setUser: (user: ProfileResponse | null) => void
+}
+
+export type RegisterFormType = {
+    login: string
+    username: string
+    password: string
 }

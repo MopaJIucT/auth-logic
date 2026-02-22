@@ -1,12 +1,15 @@
 import {useState} from "react";
-import type {VerificationForm, VerificationEmailProps} from "../../bll/types.ts";
+import type {VerificationForm, VerificationEmailProps, VerifyTokenResponse} from "../../bll/types.ts";
 import {getVerifyToken} from "../../dal/api.ts";
 import s from "../styles/Styles.module.css";
 import Logo from "./Logo.tsx";
 import CustomTextField from "./CustomTextField.tsx";
 import CustomButton from "./CustomButton.tsx";
+import {useNavigate} from "react-router-dom";
 
-function VerificationEmail({email}: VerificationEmailProps) {
+function VerificationEmail({email, setNewUser}: VerificationEmailProps) {
+
+    const navigate = useNavigate();
 
     const [verificationForm, setVerificationForm] = useState<VerificationForm>({
         "otp": "",
@@ -21,8 +24,14 @@ function VerificationEmail({email}: VerificationEmailProps) {
         }));
     }
 
-    function handleSendVerifyEmail(): void {
-        getVerifyToken(verificationForm)
+    async function handleSendVerifyEmail() {
+        const verifyToken: VerifyTokenResponse | null  = await getVerifyToken(verificationForm)
+        if (verifyToken) {
+            setNewUser(verifyToken.verificationToken)
+            navigate('/register')
+        } else {
+            return null
+        }
     }
 
     return (
@@ -40,6 +49,7 @@ function VerificationEmail({email}: VerificationEmailProps) {
                              onChange={(value) => {
                                  handleVerificationFormChange("otp", value)
                              }}
+                             type="number"
             />
             <CustomButton onClick={handleSendVerifyEmail} value={"проверить"}/>
         </div>

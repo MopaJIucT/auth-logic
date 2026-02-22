@@ -7,10 +7,12 @@ import Profile from "./ui/components/Profile.tsx"
 import {getProfile} from "./dal/api.ts"
 import type {ProfileResponse} from "./bll/types.ts"
 import Loader from "./ui/components/Loader.tsx"
+import RegisterForm from "./ui/components/RegisterForm.tsx";
 
 function App() {
 
     const [user, setUser] = useState<ProfileResponse | null>(null)
+    const [newUser, setNewUser] = useState<string | null>(null)
     const [loader, setLoader] = useState<boolean>(true)
 
     function handleSetLoader() {
@@ -44,14 +46,21 @@ function App() {
                     />
                     <Route
                         path="/generate"
-                        element={<GenerateForm/>}
+                        element={<GenerateForm setNewUser={setNewUser}/>}
                     />
                     <Route
                         path="/profile"
-                        element={user ?
-                            <Profile setUser={setUser}
-                                     user={user}
-                            /> : <Navigate to="/login"/>}
+                        element={user
+                            ? <Profile setUser={setUser}
+                                     user={user}/>
+                            : <Navigate to="/login"/>}
+                    />
+                    <Route path="/register"
+                        element={newUser
+                            ? <RegisterForm verifyToken={newUser}
+                                            setUser={setUser}
+                            />
+                            : <Navigate to="/generate" />}
                     />
                     <Route
                         path="/*"
