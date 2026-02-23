@@ -2,39 +2,15 @@ import {Navigate, Route, Routes} from "react-router-dom"
 import s from './ui/styles/Styles.module.css'
 import Login from "./ui/components/Login.tsx"
 import GenerateForm from "./ui/components/GenerateForm/GenerateForm.tsx"
-import {useEffect, useState} from "react"
 import Profile from "./ui/components/Profile.tsx"
-import {getProfile} from "./dal/api.ts"
-import type {ProfileResponse} from "./bll/types.ts"
 import Loader from "./ui/components/dumb/Loader.tsx"
 import RegisterForm from "./ui/components/GenerateForm/RegisterForm.tsx";
-import Modal from "./ui/components/dumb/Modal.tsx";
+import Modal from "./ui/components/dumb/Modal.tsx"
+import {useCheckUser} from "./bll/hooks/useCheckUser.ts";
 
 function App() {
 
-    const [user, setUser] = useState<ProfileResponse | null>(null)
-    const [newUser, setNewUser] = useState<string | null>(null)
-    const [loader, setLoader] = useState<boolean>(true)
-    const [error, setError] = useState<string | null>(null)
-
-    function handleSetLoader() {
-        setLoader(false)
-    }
-
-    useEffect(() => {
-        if ((localStorage.getItem('token') ?? '').length > 0) {
-            const res = getProfile()
-            res.then((user) => {
-                setUser(user)
-            }).catch(() => {
-                setUser(null)
-            }).finally(() => {
-                handleSetLoader()
-            })
-        } else {
-            handleSetLoader()
-        }
-    }, [])
+    const {user, setUser, newUser, setNewUser, loader, error, setError} = useCheckUser()
 
     return (
         <div className={s.mainContainer}>
@@ -60,6 +36,7 @@ function App() {
                         element={user
                             ? <Profile setUser={setUser}
                                        user={user}
+                                       setError={setError}
                             />
                             : <Navigate to="/login"/>}
                     />
@@ -67,6 +44,7 @@ function App() {
                            element={newUser
                                ? <RegisterForm verifyToken={newUser}
                                                setUser={setUser}
+                                               setError={setError}
                                />
                                : <Navigate to="/generate"/>}
                     />

@@ -1,47 +1,14 @@
-import type {EmailForm, SendEmailFormProps} from "../../../bll/types.ts";
-import {useState} from "react";
-import {sendEmail} from "../../../dal/api.ts";
-import s from "../../styles/Styles.module.css";
-import Logo from "../dumb/Logo.tsx";
-import {Link} from "react-router-dom";
-import CustomTextField from "../dumb/CustomTextField.tsx";
-import CustomButton from "../dumb/CustomButton.tsx";
+import type {SendEmailFormProps} from "../../../bll/types.ts"
+import s from "../../styles/Styles.module.css"
+import Logo from "../dumb/Logo.tsx"
+import {Link} from "react-router-dom"
+import CustomTextField from "../dumb/CustomTextField.tsx"
+import CustomButton from "../dumb/CustomButton.tsx"
+import {useSendEmail} from "../../../bll/hooks/useSendEmail.ts";
 
 function SendEmailForm({setError, setInProgressEmail}: SendEmailFormProps) {
 
-    const [emailForm, setEmailForm] = useState<EmailForm>({
-        "email": "",
-        "action": "Register"
-    });
-
-    function isEmail(email: string): boolean {
-        const regex = /\S+@\S+\.\S+/;
-        return regex.test(email);
-    }
-
-    function handleEmailChange(field: keyof EmailForm, value: string) {
-        setEmailForm(prev => ({
-            ...prev,
-            [field]: value,
-        }));
-    }
-
-    async function handleSendEmail() {
-        if(isEmail(emailForm.email)) {
-            const res = await sendEmail(emailForm)
-            if (res.ok) {
-                setInProgressEmail(emailForm.email)
-            } else if (res.status === 400) {
-                setError("Неправильно указана почта")
-            } else if (res.status === 429) {
-                setError("Слишком много запросов")
-            } else {
-                setError("Неизвестная ошибка")
-            }
-        } else {
-            setError("Некорректный адрес")
-        }
-    }
+    const {handleEmailChange, handleSendEmail} = useSendEmail({setError, setInProgressEmail})
 
     return <div className={s.container}>
         <Logo/>
@@ -63,4 +30,4 @@ function SendEmailForm({setError, setInProgressEmail}: SendEmailFormProps) {
     </div>
 }
 
-export default SendEmailForm;
+export default SendEmailForm

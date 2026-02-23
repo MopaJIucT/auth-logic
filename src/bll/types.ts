@@ -30,6 +30,12 @@ export type EmailForm = {
 export type ProfileProps = {
     setUser: (user: ProfileResponse | null) => void
     user: ProfileResponse | null
+    setError: (error: string | null) => void
+}
+
+export type UseProfileLogicProps = {
+    setUser: (user: ProfileResponse | null) => void
+    setError: (error: string | null) => void
 }
 
 export type ProfileResponse = {
@@ -55,9 +61,27 @@ export type SendEmailFormProps = {
     setInProgressEmail: (email: string | null) => void
 }
 
+export type UseCheckEmailProps = {
+    email: string
+    setNewUser: (verifyToken: string) => void
+    setError: (error: string | null) => void
+}
+
+export type UseSendEmailProps = {
+    setError: (error: string | null) => void
+    setInProgressEmail: (email: string | null) => void
+}
+
+export type UseSendRegisterFormProps = {
+    verifyToken: string
+    setUser: (user: ProfileResponse | null) => void
+    setError: (error: string | null) => void
+}
+
 export type VerificationEmailProps = {
     email: string
     setNewUser: (verifyToken: string) => void
+    setError: (error: string | null) => void
 }
 
 export type VerificationForm = {
@@ -73,6 +97,7 @@ export type VerifyTokenResponse = {
 export type RegisterFormProps = {
     verifyToken: string
     setUser: (user: ProfileResponse | null) => void
+    setError: (error: string | null) => void
 }
 
 export type RegisterFormType = {
@@ -90,6 +115,6 @@ export type ChangePasswordRequest = {
 }
 
 export type ModalProps = {
-    message: string,
+    message: string
     onClose: () => void
 }

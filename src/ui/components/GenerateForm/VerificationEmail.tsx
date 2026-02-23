@@ -1,38 +1,13 @@
-import {useState} from "react";
-import type {VerificationForm, VerificationEmailProps, VerifyTokenResponse} from "../../../bll/types.ts";
-import {getVerifyToken} from "../../../dal/api.ts";
+import type {VerificationEmailProps} from "../../../bll/types.ts";
 import s from "../../styles/Styles.module.css";
 import Logo from "../dumb/Logo.tsx";
 import CustomTextField from "../dumb/CustomTextField.tsx";
 import CustomButton from "../dumb/CustomButton.tsx";
-import {useNavigate} from "react-router-dom";
+import {useCheckEmail} from "../../../bll/hooks/useCheckEmail.ts";
 
-function VerificationEmail({email, setNewUser}: VerificationEmailProps) {
+function VerificationEmail({email, setNewUser, setError}: VerificationEmailProps) {
 
-    const navigate = useNavigate();
-
-    const [verificationForm, setVerificationForm] = useState<VerificationForm>({
-        "otp": "",
-        "email": email,
-        "action": "Register"
-    })
-
-    function handleVerificationFormChange(field: keyof VerificationForm, value: string) {
-        setVerificationForm(prev => ({
-            ...prev,
-            [field]: value,
-        }));
-    }
-
-    async function handleSendVerifyEmail() {
-        const verifyToken: VerifyTokenResponse | null  = await getVerifyToken(verificationForm)
-        if (verifyToken) {
-            setNewUser(verifyToken.verificationToken)
-            navigate('/register')
-        } else {
-            return null
-        }
-    }
+    const {handleVerificationFormChange, handleSendVerifyEmail} = useCheckEmail({email, setNewUser, setError});
 
     return (
         <div className={s.container}>
