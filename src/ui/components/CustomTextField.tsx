@@ -1,7 +1,7 @@
 import s from "../styles/Styles.module.css";
-import type {TextFieldLoginProps} from "../../bll/types.ts";
+import type {TextFieldProps} from "../../bll/types.ts";
 
-function CustomTextField({placeholder, nameId, onChange, type, value}: TextFieldLoginProps) {
+function CustomTextField({placeholder, nameId, onChange, type, value, onBlur}: TextFieldProps) {
     return (
         <div className={s.customTextField}>
             <input placeholder={placeholder}
@@ -10,6 +10,7 @@ function CustomTextField({placeholder, nameId, onChange, type, value}: TextField
                    type={type}
                    value={value}
                    onChange={(e)=> onChange(e.currentTarget.value)}
+                   onBlur={onBlur}
             />
         </div>
     )

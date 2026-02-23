@@ -23,10 +23,9 @@ function GenerateForm({setNewUser}: GenerateFormProps) {
         }));
     }
 
-    function handleSendEmail(): void {
-        console.log(emailForm);
-        sendEmail(emailForm)
-        setInProgressEmail(emailForm.email)
+    async function handleSendEmail(){
+        const res = await sendEmail(emailForm)
+        if(res) setInProgressEmail(emailForm.email)
     }
 
 

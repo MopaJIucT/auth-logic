@@ -1,9 +1,10 @@
-export type TextFieldLoginProps = {
+export type TextFieldProps = {
     placeholder: string
     nameId: string
     onChange: (value: string) => void
     type?: string
     value?: string
+    onBlur?: () => void
 }
 
 export type CustomButtonProps = {
@@ -74,5 +75,13 @@ export type RegisterFormProps = {
 export type RegisterFormType = {
     login: string
     username: string
+    password: string
+}
+
+export type ChangeUsernameRequest = {
+    username: string
+}
+
+export type ChangePasswordRequest = {
     password: string
 }

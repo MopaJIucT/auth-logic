@@ -1,4 +1,6 @@
 import type {
+    ChangePasswordRequest,
+    ChangeUsernameRequest,
     EmailForm,
     LoginForm,
     ProfileResponse,
@@ -35,10 +37,9 @@ export async function sendEmail(emailForm: EmailForm) {
     })
     if(res.ok) {
         const data: SendEmailResponse = await res.json()
-        console.log(data)
+        return data
     } else {
-        console.log('Error sending email')
-        return
+        return null
     }
 }
 
@@ -98,5 +99,37 @@ export async function sendRegisterForm(form: RegisterFormType, token: string) {
         return data.accessToken
     } else {
         return null
+    }
+}
+
+export async function changeUsername(username: ChangeUsernameRequest) {
+    const res = await fetch(initalUrl + '/api/auth/profile', {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': "Bearer " + localStorage.getItem("token")
+        },
+        body: JSON.stringify(username)
+    })
+    if(res.ok) {
+        return true
+    } else {
+        return false
+    }
+}
+
+export async function deleteUser(userPassword: ChangePasswordRequest) {
+    const res = await fetch(initalUrl + '/api/auth/user-delete', {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': "Bearer " + localStorage.getItem("token")
+        },
+        body: JSON.stringify(userPassword)
+    })
+    if(res.ok) {
+        return true
+    } else {
+        return false
     }
 }

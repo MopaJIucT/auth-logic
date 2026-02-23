@@ -52,15 +52,16 @@ function App() {
                         path="/profile"
                         element={user
                             ? <Profile setUser={setUser}
-                                     user={user}/>
+                                       user={user}
+                            />
                             : <Navigate to="/login"/>}
                     />
                     <Route path="/register"
-                        element={newUser
-                            ? <RegisterForm verifyToken={newUser}
-                                            setUser={setUser}
-                            />
-                            : <Navigate to="/generate" />}
+                           element={newUser
+                               ? <RegisterForm verifyToken={newUser}
+                                               setUser={setUser}
+                               />
+                               : <Navigate to="/generate"/>}
                     />
                     <Route
                         path="/*"

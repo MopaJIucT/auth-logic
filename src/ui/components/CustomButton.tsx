@@ -4,7 +4,7 @@ import s from "../styles/Styles.module.css";
 function CustomButton({onClick, value}: CustomButtonProps) {
     return (
         <div className={s.buttonContainer}>
-            <button onClick={onClick}>{value}</button>
+            <button onClick={onClick} type={"button"}>{value}</button>
         </div>
     )
 }
