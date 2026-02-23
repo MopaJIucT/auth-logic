@@ -1,13 +1,13 @@
 import s from "../styles/Styles.module.css"
 import {Link} from "react-router-dom"
-import Logo from "./Logo.tsx"
-import CustomTextField from "./CustomTextField.tsx"
-import CustomButton from "./CustomButton.tsx"
+import Logo from "./dumb/Logo.tsx"
+import CustomTextField from "./dumb/CustomTextField.tsx"
+import CustomButton from "./dumb/CustomButton.tsx"
 import {useState} from "react"
 import {getProfile, sendFormLogin} from "../../dal/api.ts"
 import type {LoginForm, LoginProps} from "../../bll/types.ts"
 
-function Login({setUser}: LoginProps) {
+function Login({setUser, setError}: LoginProps) {
     const [formLogin, setFormLogin] = useState<LoginForm>({
         login: "",
         password: "",
@@ -30,6 +30,7 @@ function Login({setUser}: LoginProps) {
             )
         } else {
             setUser(null)
+            setError("Такого пользователя не существует")
         }
     }
 

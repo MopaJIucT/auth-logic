@@ -14,6 +14,7 @@ export type CustomButtonProps = {
 
 export type LoginProps = {
     setUser: (value: ProfileResponse | null) => void
+    setError: (error: string | null) => void
 }
 
 export type LoginForm = {
@@ -46,10 +47,12 @@ export type ProfileResponse = {
 
 export type GenerateFormProps = {
     setNewUser: (verifyToken: string) => void
+    setError: (error: string | null) => void
 }
 
-export type SendEmailResponse = {
-    expiresAt: string
+export type SendEmailFormProps = {
+    setError: (error: string | null) => void
+    setInProgressEmail: (email: string | null) => void
 }
 
 export type VerificationEmailProps = {
@@ -84,4 +87,9 @@ export type ChangeUsernameRequest = {
 
 export type ChangePasswordRequest = {
     password: string
+}
+
+export type ModalProps = {
+    message: string,
+    onClose: () => void
 }

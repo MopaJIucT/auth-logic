@@ -1,19 +1,21 @@
 import {Navigate, Route, Routes} from "react-router-dom"
 import s from './ui/styles/Styles.module.css'
 import Login from "./ui/components/Login.tsx"
-import GenerateForm from "./ui/components/GenerateForm.tsx"
+import GenerateForm from "./ui/components/GenerateForm/GenerateForm.tsx"
 import {useEffect, useState} from "react"
 import Profile from "./ui/components/Profile.tsx"
 import {getProfile} from "./dal/api.ts"
 import type {ProfileResponse} from "./bll/types.ts"
-import Loader from "./ui/components/Loader.tsx"
-import RegisterForm from "./ui/components/RegisterForm.tsx";
+import Loader from "./ui/components/dumb/Loader.tsx"
+import RegisterForm from "./ui/components/GenerateForm/RegisterForm.tsx";
+import Modal from "./ui/components/dumb/Modal.tsx";
 
 function App() {
 
     const [user, setUser] = useState<ProfileResponse | null>(null)
     const [newUser, setNewUser] = useState<string | null>(null)
     const [loader, setLoader] = useState<boolean>(true)
+    const [error, setError] = useState<string | null>(null)
 
     function handleSetLoader() {
         setLoader(false)
@@ -36,17 +38,22 @@ function App() {
 
     return (
         <div className={s.mainContainer}>
-            {loader ? <Loader/> : (
-                <Routes>
+            {loader
+                ? <Loader/>
+                : <Routes>
                     <Route
                         path="/login"
                         element={user
                             ? <Navigate to="/profile"/>
-                            : <Login setUser={setUser}/>}
+                            : <Login setUser={setUser}
+                                     setError={setError}
+                            />}
                     />
                     <Route
                         path="/generate"
-                        element={<GenerateForm setNewUser={setNewUser}/>}
+                        element={<GenerateForm setNewUser={setNewUser}
+                                               setError={setError}
+                        />}
                     />
                     <Route
                         path="/profile"
@@ -68,7 +75,10 @@ function App() {
                         element={<Navigate to="/login"/>}
                     />
                 </Routes>
-            )}
+            }
+            {error && <Modal message={error}
+                             onClose={() => setError("")}/>
+            }
         </div>
     )
 }

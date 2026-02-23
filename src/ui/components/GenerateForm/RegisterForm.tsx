@@ -1,10 +1,10 @@
-import s from "../styles/Styles.module.css";
-import Logo from "./Logo.tsx";
-import CustomTextField from "./CustomTextField.tsx";
-import CustomButton from "./CustomButton.tsx";
-import type {RegisterFormProps, RegisterFormType} from "../../bll/types.ts";
+import s from "../../styles/Styles.module.css";
+import Logo from "../dumb/Logo.tsx";
+import CustomTextField from "../dumb/CustomTextField.tsx";
+import CustomButton from "../dumb/CustomButton.tsx";
+import type {RegisterFormProps, RegisterFormType} from "../../../bll/types.ts";
 import {useState} from "react";
-import {getProfile, sendRegisterForm} from "../../dal/api.ts";
+import {getProfile, sendRegisterForm} from "../../../dal/api.ts";
 import {useNavigate} from "react-router-dom";
 
 function RegisterForm({verifyToken,setUser}: RegisterFormProps) {

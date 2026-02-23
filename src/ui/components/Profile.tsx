@@ -1,10 +1,10 @@
 import s from "../styles/Styles.module.css"
-import Logo from "./Logo.tsx"
-import CustomButton from "./CustomButton.tsx"
+import Logo from "./dumb/Logo.tsx"
+import CustomButton from "./dumb/CustomButton.tsx"
 import type {ProfileProps} from "../../bll/types.ts"
 import {changeUsername, deleteUser, getLogout, getProfile} from "../../dal/api.ts"
 import {useState} from "react"
-import CustomTextField from "./CustomTextField.tsx"
+import CustomTextField from "./dumb/CustomTextField.tsx"
 
 function Profile({setUser, user}: ProfileProps) {
 

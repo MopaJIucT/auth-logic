@@ -1,5 +1,5 @@
-import s from "../styles/Styles.module.css";
-import type {TextFieldProps} from "../../bll/types.ts";
+import s from "../../styles/Styles.module.css";
+import type {TextFieldProps} from "../../../bll/types.ts";
 
 function CustomTextField({placeholder, nameId, onChange, type, value, onBlur}: TextFieldProps) {
     return (

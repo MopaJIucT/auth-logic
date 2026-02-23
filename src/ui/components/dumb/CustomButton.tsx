@@ -1,5 +1,5 @@
-import type {CustomButtonProps} from "../../bll/types.ts";
-import s from "../styles/Styles.module.css";
+import type {CustomButtonProps} from "../../../bll/types.ts";
+import s from "../../styles/Styles.module.css";
 
 function CustomButton({onClick, value}: CustomButtonProps) {
     return (

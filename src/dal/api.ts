@@ -5,8 +5,8 @@ import type {
     LoginForm,
     ProfileResponse,
     RegisterFormType,
-    SendEmailResponse,
-    VerificationForm, VerifyTokenResponse
+    VerificationForm,
+    VerifyTokenResponse
 } from "../bll/types.ts";
 
 const initalUrl = 'https://dev-api.memorise.cards'
@@ -28,19 +28,13 @@ export async function sendFormLogin(formLogin: LoginForm) {
 }
 
 export async function sendEmail(emailForm: EmailForm) {
-    const res = await  fetch(initalUrl + '/api/auth/otp/generate', {
+    return await  fetch(initalUrl + '/api/auth/otp/generate', {
         method: 'POST',
         headers: {
             'Content-Type': "application/json",
         },
         body: JSON.stringify(emailForm)
     })
-    if(res.ok) {
-        const data: SendEmailResponse = await res.json()
-        return data
-    } else {
-        return null
-    }
 }
 
 export function getLogout() {

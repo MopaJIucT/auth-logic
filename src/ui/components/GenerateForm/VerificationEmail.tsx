@@ -1,10 +1,10 @@
 import {useState} from "react";
-import type {VerificationForm, VerificationEmailProps, VerifyTokenResponse} from "../../bll/types.ts";
-import {getVerifyToken} from "../../dal/api.ts";
-import s from "../styles/Styles.module.css";
-import Logo from "./Logo.tsx";
-import CustomTextField from "./CustomTextField.tsx";
-import CustomButton from "./CustomButton.tsx";
+import type {VerificationForm, VerificationEmailProps, VerifyTokenResponse} from "../../../bll/types.ts";
+import {getVerifyToken} from "../../../dal/api.ts";
+import s from "../../styles/Styles.module.css";
+import Logo from "../dumb/Logo.tsx";
+import CustomTextField from "../dumb/CustomTextField.tsx";
+import CustomButton from "../dumb/CustomButton.tsx";
 import {useNavigate} from "react-router-dom";
 
 function VerificationEmail({email, setNewUser}: VerificationEmailProps) {
